@@ -143,14 +143,16 @@ class VAEDataset(LightningDataModule):
 #       =========================  CelebA Dataset  =========================
     
         train_transforms = transforms.Compose([transforms.RandomHorizontalFlip(),
-                                              transforms.CenterCrop(self.patch_size),
+#                                              transforms.CenterCrop(self.patch_size),
                                               transforms.Resize(self.patch_size),
-                                              transforms.ToTensor(),])
+                                              transforms.ToTensor(),
+                                              transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
         
         val_transforms = transforms.Compose([transforms.RandomHorizontalFlip(),
-                                            transforms.CenterCrop(self.patch_size),
+#                                            transforms.CenterCrop(self.patch_size),
                                             transforms.Resize(self.patch_size),
-                                            transforms.ToTensor(),])
+                                            transforms.ToTensor(),
+                                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
         
         self.train_dataset = MyChinesePaintings(
             self.data_dir,
@@ -158,7 +160,6 @@ class VAEDataset(LightningDataModule):
             transform=train_transforms,
         )
         
-        # Replace CelebA with your dataset
         self.val_dataset = MyChinesePaintings(
             self.data_dir,
             split='val',
